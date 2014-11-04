@@ -122,9 +122,18 @@ dev.off()
 
 
 ### Plot 2
+### # Instruction to reconstruct ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png)  
+## Subset with a new variable Time2 that is composed of Date2 and Time pasted together
+dt$Time2=ymd_hms(paste(dt$Date2,dt$Time, sep=" " ))
+dt2 <- subset(dt, select = Global_active_power:Time2)
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
+## Create plot2 on screen device
+plot(dt2$Time2, dt2$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
 
+## Copy plot2 to a PNG file
+dev.copy(png, file = "plot2.png", width = 480, height = 480)
+## Don't forget to close the PNG device!
+dev.off() 
 
 ### Plot 3
 

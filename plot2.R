@@ -44,6 +44,12 @@ data <- read.table("household_power_consumption.txt", header=T, sep=";", na.stri
 ## Date/Time classes in R using the `strptime()` and `as.Date()`
 ## functions.
 
+## Install the "Lubridate" package
+install.packages("lubridate")
+
+## Call the correct Library
+library(lubridate)
+
 ## Reformat the Date to "Date2"
 data$Date2=as.Date(strptime(data$Date, format="%d/%m/%Y" ),"%Y%m&d")
 
@@ -52,19 +58,25 @@ dt1 <- subset(data, Date2=="2007-02-01", select = Time:Date2)
 dt2 <- subset(data, Date2=="2007-02-02", select = Time:Date2)
 dt <- rbind(dt1, dt2)
 
-## head(dt)
-## tail(dt)
-## str(dt)
-## summary(dt)
+## Subset with a new variable Time2 that is composed of Date2 and Time pasted together
+dt$Time2=ymd_hms(paste(dt$Date2,dt$Time, sep=" " ))
+dt2 <- subset(dt, select = Global_active_power:Time2)
 
 
-### Plot 1
-### # Instruction to reconstruct [plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+## head(dt2)
+## tail(dt2)
+## str(dt2)
+## summary(dt2)
 
-## Create plot on screen device and give the graf a new title
-hist(dt$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)" )
-## Copy my plot to a PNG file
-dev.copy(png, file = "plot1.png", width = 480, height = 480)
+
+### Plot 2
+### # Instruction to reconstruct ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png)  
+
+## Create plot2 on screen device
+plot(dt2$Time2, dt2$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
+
+## Copy plot2 to a PNG file
+dev.copy(png, file = "plot2.png", width = 480, height = 480)
 ## Don't forget to close the PNG device!
 dev.off() 
 
