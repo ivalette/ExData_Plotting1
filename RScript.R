@@ -73,6 +73,15 @@ dt <- rbind(dt1, dt2)
 ## str(dt)
 ## summary(dt)
 
+## Subset with a new variable Time2 that is composed of Date2 and Time pasted together
+dt$Time2=ymd_hms(paste(dt$Date2,dt$Time, sep=" " ))
+dt2 <- subset(dt, select = Global_active_power:Time2)
+
+## head(dt2)
+## tail(dt2)
+## str(dt2)
+## summary(dt2)
+
 ## * Note that in this dataset missing values are coded as `?`.
 
 
@@ -123,9 +132,6 @@ dev.off()
 
 ### Plot 2
 ### # Instruction to reconstruct ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png)  
-## Subset with a new variable Time2 that is composed of Date2 and Time pasted together
-dt$Time2=ymd_hms(paste(dt$Date2,dt$Time, sep=" " ))
-dt2 <- subset(dt, select = Global_active_power:Time2)
 
 ## Create plot2 on screen device
 plot(dt2$Time2, dt2$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
@@ -136,8 +142,22 @@ dev.copy(png, file = "plot2.png", width = 480, height = 480)
 dev.off() 
 
 ### Plot 3
+### # Instruction to reconstruct ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png)  
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+## Create plot on screen device
+plot(dt2$Time2, dt2$Sub_metering_1, type = "l", col="black", xlab = "", ylab = "Energy sub metering")
+points(dt2$Time2, dt2$Sub_metering_2, type = "l", col="red", xlab = "", ylab = "Energy sub metering")        
+points(dt2$Time2, dt2$Sub_metering_3, type = "l", col="blue", xlab = "", ylab = "Energy sub metering")
+
+## Create a legend in the top rigth corner and change the size of text (cex).
+legend("topright", lty = 1, col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", 
+                                                                        "Sub_metering_3"), cex=0.5)
+
+## Copy plot3 to a PNG file
+dev.copy(png, file = "plot3.png", width = 480, height = 480)
+## Don't forget to close the PNG device!
+dev.off() 
+
 
 
 ### Plot 4
