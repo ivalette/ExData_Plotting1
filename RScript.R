@@ -161,6 +161,39 @@ dev.off()
 
 
 ### Plot 4
+### # Instruction to reconstruct ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png)  
+## Split the graf area into 4 sections
+par(mfrow = c(2, 2))
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+# plot 1 (graf 1.1)
+plot(dt2$Time2, dt2$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power", 
+     cex.axis=0.75, cex.lab=0.75)
+
+# plot 2 (gral 1.2)
+plot(dt2$Time2, dt2$Voltage, type = "l", xlab = "datetime", ylab = "Voltage", cex.axis=0.75, cex.lab=0.75 )
+
+# plot 3 (graf 2.1)
+plot(dt2$Time2, dt2$Sub_metering_1, type = "l", col="black", xlab = "", ylab = "Energy sub metering", 
+     cex.axis=0.75, cex.lab=0.75)
+points(dt2$Time2, dt2$Sub_metering_2, type = "l", col="red", xlab = "", ylab = "Energy sub metering", 
+       cex.axis=0.75, cex.lab=0.75)        
+points(dt2$Time2, dt2$Sub_metering_3, type = "l", col="blue", xlab = "", ylab = "Energy sub metering", 
+       cex.axis=0.5, cex.lab=0.75)
+
+## Create a legend in the top rigth corner and change the size of text.
+legend("topright", lty = 1, col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", 
+                                                                        "Sub_metering_3"), 
+       cex=0.75, bty = "n", y.intersp=0.35, trace=T)
+
+# plot 4 (graf 2.2)
+plot(dt2$Time2, dt2$Global_reactive_power, type = "l", xlab = "datetime", ylab = "Global_reactive_power", 
+     ylim = c(0, 0.5), cex.axis=0.75, cex.lab=0.75)
+
+
+## Copy plot4 to a PNG file
+dev.copy(png, file = "plot4.png", width = 480, height = 480)
+## Don't forget to close the PNG device!
+dev.off() 
+
+
 
